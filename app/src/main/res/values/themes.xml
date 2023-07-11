@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Moviesamplecompose" parent="android:Theme.Material.Light.NoActionBar">
+    </style>
+
+    <style name="Theme.SplashScreen.App" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#1f1d2b</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.Moviesamplecompose</item>
+    </style>
+</resources>
