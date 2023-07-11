@@ -22,7 +22,7 @@ import com.quanle.movie_sample_compose.R
 import com.quanle.movie_sample_compose.ui.screen.components.MovieComponent
 
 @Composable
-fun HomeScreen(state: () -> Unit) {
+fun HomeScreen() {
     val scrollState = rememberScrollState()
 
     Column(
@@ -43,7 +43,7 @@ fun HomeScreen(state: () -> Unit) {
             title = "Top 10 Movies This Week",
             movies = 10,
             onSeeAll =  {
-                state()
+                //navigation
             }
         )
 

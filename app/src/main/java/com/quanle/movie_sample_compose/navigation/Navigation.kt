@@ -6,7 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.quanle.movie_sample_compose.ui.screen.detail.DetailScreen
+import com.quanle.movie_sample_compose.ui.screen.download.DownloadScreen
+import com.quanle.movie_sample_compose.ui.screen.explorer.ExplorerScreen
 import com.quanle.movie_sample_compose.ui.screen.home.HomeScreen
+import com.quanle.movie_sample_compose.ui.screen.mylist.MyListScreen
+import com.quanle.movie_sample_compose.ui.screen.profile.ProfileScreen
 
 
 @Composable
@@ -15,24 +19,42 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeScreen.route
+        startDestination = ScreenDestination.HomeScreen.route
     ) {
 
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(state = {
-                navController.navigate(Screen.DetailScreen.route)
-            })
+        composable(route = ScreenDestination.HomeScreen.route) {
+            HomeScreen()
         }
 
-        composable(route = Screen.DetailScreen.route) {
-            DetailScreen(navController)
+        composable(route = ScreenDestination.DetailScreen.route) {
+            DetailScreen()
+        }
+
+        composable(route = ScreenDestination.MyListScreen.route) {
+            MyListScreen()
+        }
+
+        composable(route = ScreenDestination.ExplorerScreen.route) {
+            ExplorerScreen()
+        }
+
+        composable(route = ScreenDestination.ProfileScreen.route) {
+            ProfileScreen()
+        }
+
+        composable(route = ScreenDestination.DownloadScreen.route) {
+            DownloadScreen()
         }
 
     }
 }
 
-sealed class Screen( val route: String) {
-    object HomeScreen: Screen("home_screen")
-    object DetailScreen: Screen("detail_screen")
+sealed class ScreenDestination( val route: String) {
+    object HomeScreen: ScreenDestination("HomeScreen")
+    object DetailScreen: ScreenDestination("DetailScreen")
+    object MyListScreen: ScreenDestination("MyListScreen")
+    object DownloadScreen: ScreenDestination("DownloadScreen")
+    object ExplorerScreen: ScreenDestination("ExplorerScreen")
+    object ProfileScreen: ScreenDestination("ProfileScreen")
 
 }
