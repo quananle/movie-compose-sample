@@ -1,97 +1,105 @@
 package com.quanle.movie_sample_compose.ui.screen.components
-
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.quanle.movie_sample_compose.R
-import com.quanle.movie_sample_compose.utils.wtf
 
 @Composable
-fun AppBottomNavigation(modifier: Modifier = Modifier, tabSelected: Int, onTabSelected: (Int) -> Unit) {
+fun AppBottomNavigation(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
+
+    val bottomNavScreens = listOf(
+        AppBottomNavigationItem.HomeScreen,
+        AppBottomNavigationItem.ExplorerScreen,
+        AppBottomNavigationItem.MyListScreen,
+        AppBottomNavigationItem.DownloadScreen,
+        AppBottomNavigationItem.ProfileScreen
+    )
+
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination
 
     BottomNavigation(
         modifier = modifier,
+        elevation = 16.dp,
         backgroundColor = Color.White,
         contentColor = Color.Gray,
         content = {
-
-            screens.forEachIndexed { index, item ->
-
-                BottomNavigationItem(
-                    label = {
-                        Text(
-                            text = item.name,
-                            fontSize = 10.sp,
-                            maxLines = 1
-                        )
-                    },
-                    icon = {
-                        Icon(
-                            painterResource(id = item.icon),
-                            contentDescription = ""
-                        )
-                    },
-                    selectedContentColor = Color.Red,
-                    unselectedContentColor = Color.Gray,
-                    selected = tabSelected == index,
-                    onClick = {
-                        onTabSelected(index)
-                    })
+            bottomNavScreens.forEach {  item ->
+                currentRoute?.let { currentDestination ->
+                    BottomNavigationView(
+                        item = item,
+                        currentDestination = currentDestination,
+                        onItemClick = { route ->
+                            navController.navigate(
+                                route = route,
+                                builder = {
+                                    popUpTo(AppBottomNavigationItem.HomeScreen.route)
+                                    launchSingleTop = true
+                                }
+                            )
+                        }
+                    )
+                }
             }
         }
     )
 }
 
 @Composable
-@Preview
-fun previewBottomNav() {
-
+fun RowScope.BottomNavigationView(
+    item: AppBottomNavigationItem,
+    currentDestination: NavDestination?,
+    onItemClick: (String) -> Unit
+) {
+    BottomNavigationItem(
+        label = {
+            Text(
+                text = item.name,
+                fontSize = 10.sp,
+                maxLines = 1
+            )
+        },
+        icon = {
+            Icon(
+                painter =  painterResource(id = item.icon),
+                contentDescription = ""
+            )
+        },
+        selectedContentColor = Color.Red,
+        unselectedContentColor = Color.Gray,
+        selected = currentDestination?.route == item.route,
+        onClick = {
+            onItemClick(item.route)
+        }
+    )
 }
 
-val screens = listOf(
-    Screen(
-        name = "Home",
-        icon = R.drawable.ic_home
-    ),
-
-    Screen(
-        name = "Explore",
-        icon = R.drawable.ic_explore
-    ),
-
-    Screen(
-        name = "My List",
-        icon = R.drawable.ic_mylist
-    ),
-
-    Screen(
-        name = "Download",
-        icon = R.drawable.ic_download
-    ),
-
-    Screen(
-        name = "Profile",
-        icon = R.drawable.ic_person
-    )
-)
-data class Screen(
+sealed class AppBottomNavigationItem(
     val name: String,
-    @DrawableRes
-    val icon: Int
-)
+    val route: String,
+    @DrawableRes val icon: Int
+) {
+    object HomeScreen: AppBottomNavigationItem(name = "Home", icon = R.drawable.ic_home , route = "HomeScreen")
+    object MyListScreen: AppBottomNavigationItem(name = "My List", icon = R.drawable.ic_mylist, route = "MyListScreen")
+    object DownloadScreen: AppBottomNavigationItem(name = "Download", icon = R.drawable.ic_download, route = "DownloadScreen")
+    object ExplorerScreen: AppBottomNavigationItem(name = "Explorer", icon = R.drawable.ic_explore, route = "ExplorerScreen")
+    object ProfileScreen: AppBottomNavigationItem(name = "Profile", icon = R.drawable.ic_person, route = "ProfileScreen")
+}
 

@@ -23,6 +23,8 @@ import com.quanle.movie_sample_compose.ui.screen.components.MovieComponent
 
 @Composable
 fun HomeScreen() {
+
+
     val scrollState = rememberScrollState()
 
     Column(
@@ -233,9 +235,9 @@ fun HomeListMovie(
     movies: Int //mock
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.padding(12.dp)
     ) {
-        Row(modifier = Modifier.padding(12.dp)) {
+        Row {
             Text(
                 text = title,
                 fontSize = 16.sp,
@@ -256,7 +258,7 @@ fun HomeListMovie(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = 4.dp)
         ) {
             items(movies) {
                 MovieComponent(
