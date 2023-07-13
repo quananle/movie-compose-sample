@@ -18,13 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.quanle.movie_sample_compose.R
 import com.quanle.movie_sample_compose.ui.screen.components.MovieComponent
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun HomeScreen() {
 
-
+    val viewmodel: HomeViewModel = hiltViewModel()
     val scrollState = rememberScrollState()
 
     Column(

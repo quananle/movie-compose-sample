@@ -22,7 +22,10 @@ import com.quanle.movie_sample_compose.R
 import com.quanle.movie_sample_compose.navigation.AppNavigation
 import com.quanle.movie_sample_compose.ui.screen.components.AppBottomNavigation
 import com.quanle.movie_sample_compose.ui.theme.MovieSampleComposeTheme
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
