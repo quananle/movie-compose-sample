@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.quanle.movie_sample_compose.ui.screen.home.HomeViewModel
 
 @Composable
 fun MyListScreen() {
@@ -19,6 +21,7 @@ fun MyListScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text("MyListScreen")
     }
 }
