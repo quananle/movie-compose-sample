@@ -22,8 +22,6 @@ fun DetailScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Details Screen"
-        , Modifier.clickable { //navigation
-        })
+        Text("DetailScreen", modifier = Modifier.clickable {  })
     }
 }

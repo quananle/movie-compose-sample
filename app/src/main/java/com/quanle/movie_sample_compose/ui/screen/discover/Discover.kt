@@ -1,4 +1,4 @@
-package com.quanle.movie_sample_compose.ui.screen.explorer
+package com.quanle.movie_sample_compose.ui.screen.discover
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ExplorerScreen(
+fun DiscoverScreen(
     onClickedDetailMovie: () -> Unit
-) {
+) { /** DiscoverScreen with component **/
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,6 +22,6 @@ fun ExplorerScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("ExplorerScreen", modifier = Modifier.clickable { onClickedDetailMovie() })
+        Text("DiscoverScreen", Modifier.clickable { onClickedDetailMovie() })
     }
 }

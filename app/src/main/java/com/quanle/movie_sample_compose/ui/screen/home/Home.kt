@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -26,18 +27,47 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
-fun HomeScreen() {
+@Preview
+fun HomePreview() {
+    HomeListMovie(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(Color.Red),
+        title = "New Releases",
+        movies = 3,
+        onClickedDetailMovie =  {
 
-    val scrollState = rememberScrollState()
+        },
+        onClickedSeeAll = {}
+    )
+}
+
+@Composable
+fun HomeScreen(
+    modifier: Modifier,
+    scrollState: ScrollState = rememberScrollState(),
+    onClickedDiscoverMovie: () -> Unit,
+    onClickedSearch: () -> Unit,
+    onClickedNotification: () -> Unit,
+    onClickedDetailMovie: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state = scrollState)
-    ) {
+    ) { /** HomeScreen with component **/
+        
         Banner(
             painter = painterResource(id = R.drawable.ic_launcher_background),
             contentDes = "ah",
-            modifier = Modifier.height(350.dp)
+            modifier = Modifier.height(350.dp),
+            onClickedSearch = {
+                onClickedSearch()
+            },
+            onClickedNotification = {
+                onClickedNotification()
+            }
         )
 
         HomeListMovie(
@@ -46,66 +76,14 @@ fun HomeScreen() {
                 .wrapContentHeight(),
             title = "Top 10 Movies This Week",
             movies = 10,
-            onSeeAll =  {
-                //navigation
+            onClickedSeeAll =  {
+                onClickedDiscoverMovie()
+            },
+            onClickedDetailMovie = {
+                onClickedDetailMovie()
             }
-        )
+        ) // end of New Releases
 
-        Spacer(modifier = Modifier
-            .height(8.dp)
-            .background(Color.LightGray))
-
-        HomeListMovie(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .background(Color.Red),
-            title = "New Releases",
-            movies = 3,
-            onSeeAll =  {
-
-            }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        HomeListMovie(
-            modifier = Modifier
-                .background(Color.Cyan)
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            title = "Top pick",
-            movies = 3,
-            onSeeAll =  {
-
-            }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        HomeListMovie(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            title = "Alo 1 2 1 2",
-            movies = 3,
-            onSeeAll =  {
-
-            }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        HomeListMovie(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            title = "New Releases",
-            movies = 3,
-            onSeeAll =  {
-
-            }
-        )
     }
 
 }
@@ -114,7 +92,9 @@ fun HomeScreen() {
 fun Banner(
     modifier: Modifier = Modifier,
     painter: Painter,
-    contentDes: String
+    contentDes: String = "",
+    onClickedSearch: () -> Unit,
+    onClickedNotification: () -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxWidth()
@@ -134,30 +114,36 @@ fun Banner(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
 
-            Row {
-                Icon(
-                    imageVector = Icons.Filled.Email,
+            Row (
+                modifier = Modifier.padding(horizontal = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.app_icon),
                     contentDescription = "App Icon",
-                    tint = Color.Red,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(40.dp)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 Icon(
-                    imageVector = Icons.Default.Search,
+                    painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = "App Icon",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(26.dp).clickable {
+                        onClickedSearch()
+                    }
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(20.dp))
 
                 Icon(
-                    imageVector = Icons.Default.Notifications,
+                    painter = painterResource(id = R.drawable.ic_notification),
                     contentDescription = "App Icon",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(28.dp).clickable {
+                        onClickedNotification()
+                    }
                 )
             }
 
@@ -233,7 +219,8 @@ fun Banner(
 fun HomeListMovie(
     modifier: Modifier = Modifier,
     title: String,
-    onSeeAll: () -> Unit,
+    onClickedSeeAll: () -> Unit,
+    onClickedDetailMovie: () -> Unit,
     movies: Int //mock
 ) {
     Column(
@@ -252,7 +239,7 @@ fun HomeListMovie(
                 fontSize = 16.sp,
                 fontWeight = FontWeight(600),
                 color = Color.Red,
-                modifier = Modifier.clickable { onSeeAll() }
+                modifier = Modifier.clickable { onClickedSeeAll() }
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -264,7 +251,9 @@ fun HomeListMovie(
         ) {
             items(movies) {
                 MovieComponent(
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp).clickable {
+                        onClickedDetailMovie()
+                    }
                 )
             }
         }

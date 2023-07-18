@@ -1,6 +1,7 @@
 package com.quanle.movie_sample_compose.ui.screen.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,9 @@ import androidx.compose.ui.graphics.Color
 import com.quanle.movie_sample_compose.utils.wtf
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onClicked: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -20,6 +23,6 @@ fun ProfileScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("ProfileScreen")
+        Text("ProfileScreen", modifier = Modifier.clickable { onClicked() })
     }
 }

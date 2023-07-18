@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,7 +22,8 @@ import com.quanle.movie_sample_compose.R
 @Composable
 fun AppBottomNavigation(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navBackStackEntry: NavBackStackEntry?,
+    onTabClicked: (String) -> Unit
 ) {
 
     val bottomNavScreens = listOf(
@@ -32,8 +34,8 @@ fun AppBottomNavigation(
         AppBottomNavigationItem.ProfileScreen
     )
 
-    val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry.value?.destination
+
+    val currentRoute = navBackStackEntry?.destination
 
     BottomNavigation(
         modifier = modifier,
@@ -47,13 +49,7 @@ fun AppBottomNavigation(
                         item = item,
                         currentDestination = currentDestination,
                         onItemClick = { route ->
-                            navController.navigate(
-                                route = route,
-                                builder = {
-                                    popUpTo(AppBottomNavigationItem.HomeScreen.route)
-                                    launchSingleTop = true
-                                }
-                            )
+                            onTabClicked(route)
                         }
                     )
                 }
