@@ -125,10 +125,14 @@ fun NavGraphBuilder.homeGraph(
             route = MainGraph.HomeGraph.DiscoverMovie,
             content = {
                 DiscoverScreen(
-                    onClickedDetailMovie = {
-                        navController.navigate(
-                            route = MainGraph.CommonDestination.DetailMovie
-                        )
+                    title = "Top 10 Movies This Week",
+                    onBackActionClicked = { navController.popBackStack() },
+                    onSearchClicked = {
+                        navController.popBackStack()
+                        navController.navigate(route = MainGraph.ExplorerRoute,)
+                    },
+                    onDetailMovieClicked = {
+                        wtf { it }
                     }
                 )
             }
@@ -138,7 +142,12 @@ fun NavGraphBuilder.homeGraph(
             route = MainGraph.HomeGraph.Notification,
             content = {
                 NotificationScreen(
-                    onClickedDetailMovie = {
+                    title = "Notification",
+                    onBackActionClicked = { navController.popBackStack() },
+                    onOptionMenuClicked = {
+
+                    },
+                    onNotificationClicked = {
                         navController.navigate(
                             route = MainGraph.CommonDestination.DetailMovie
                         )

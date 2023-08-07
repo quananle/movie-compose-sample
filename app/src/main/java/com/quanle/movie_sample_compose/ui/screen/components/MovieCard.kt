@@ -15,13 +15,11 @@ import androidx.compose.ui.unit.sp
 import com.quanle.movie_sample_compose.R
 
 @Composable
-fun MovieComponent(
+fun MovieCard(
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
     ) {
         Card(
             shape = RoundedCornerShape(16.dp)
@@ -30,8 +28,7 @@ fun MovieComponent(
                 painter = painterResource(id = R.drawable.img_onboard_1),
                 contentDescription = "movie rate",
                 modifier = Modifier
-                    .width(100.dp)
-                    .height(150.dp)
+                    .fillMaxSize()
             )
         }
         Card(
@@ -53,5 +50,5 @@ fun MovieComponent(
 @Composable
 @Preview
 fun singleMovie() {
-    MovieComponent(Modifier.width(200.dp).height(150.dp))
+    MovieCard()
 }

@@ -19,12 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.quanle.movie_sample_compose.R
-import com.quanle.movie_sample_compose.ui.screen.components.MovieComponent
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.quanle.movie_sample_compose.ui.screen.components.MovieCard
 
 @Composable
 @Preview
@@ -53,7 +49,7 @@ fun HomeScreen(
     onClickedDetailMovie: () -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(state = scrollState)
     ) { /** HomeScreen with component **/
@@ -72,6 +68,7 @@ fun HomeScreen(
 
         HomeListMovie(
             modifier = Modifier
+                .padding(12.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
             title = "Top 10 Movies This Week",
@@ -83,6 +80,21 @@ fun HomeScreen(
                 onClickedDetailMovie()
             }
         ) // end of New Releases
+
+        HomeListMovie(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            title = "Top 10 Movies This Week",
+            movies = 10,
+            onClickedSeeAll =  {
+                onClickedDiscoverMovie()
+            },
+            onClickedDetailMovie = {
+                onClickedDetailMovie()
+            }
+        )
 
     }
 
@@ -130,9 +142,11 @@ fun Banner(
                     painter = painterResource(id = R.drawable.ic_search),
                     contentDescription = "App Icon",
                     tint = Color.White,
-                    modifier = Modifier.size(26.dp).clickable {
-                        onClickedSearch()
-                    }
+                    modifier = Modifier
+                        .size(26.dp)
+                        .clickable {
+                            onClickedSearch()
+                        }
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -141,9 +155,11 @@ fun Banner(
                     painter = painterResource(id = R.drawable.ic_notification),
                     contentDescription = "App Icon",
                     tint = Color.White,
-                    modifier = Modifier.size(28.dp).clickable {
-                        onClickedNotification()
-                    }
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable {
+                            onClickedNotification()
+                        }
                 )
             }
 
@@ -224,9 +240,11 @@ fun HomeListMovie(
     movies: Int //mock
 ) {
     Column(
-        modifier = modifier.padding(12.dp)
+        modifier = modifier
     ) {
-        Row {
+        Row (
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp)
+        ) {
             Text(
                 text = title,
                 fontSize = 16.sp,
@@ -242,27 +260,25 @@ fun HomeListMovie(
                 modifier = Modifier.clickable { onClickedSeeAll() }
             )
         }
+
         Spacer(modifier = Modifier.height(8.dp))
+
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 4.dp)
         ) {
             items(movies) {
-                MovieComponent(
-                    modifier = Modifier.padding(horizontal = 4.dp).clickable {
-                        onClickedDetailMovie()
-                    }
+                MovieCard(
+                    modifier = Modifier
+                        .height(200.dp)
+                        .width(150.dp)
+                        .padding(horizontal = 4.dp)
+                        .clickable {
+                            onClickedDetailMovie()
+                        }
                 )
             }
         }
     }
-}
-
-
-@OptIn(ExperimentalFoundationApi::class)
-@Preview
-@Composable
-fun ComposablePreview() {
 }
