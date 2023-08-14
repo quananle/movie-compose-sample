@@ -25,18 +25,13 @@ import com.quanle.movie_sample_compose.ui.screen.components.MovieCard
 @Composable
 @Preview
 fun HomePreview() {
-    HomeListMovie(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .background(Color.Red),
-        title = "New Releases",
-        movies = 3,
-        onClickedDetailMovie =  {
+    HomeScreen(
+        modifier = Modifier,
+        onClickedDiscoverMovie = { /*TODO*/ },
+        onClickedSearch = { /*TODO*/ },
+        onClickedNotification = { /*TODO*/ }) {
 
-        },
-        onClickedSeeAll = {}
-    )
+    }
 }
 
 @Composable
@@ -109,7 +104,7 @@ fun Banner(
     onClickedNotification: () -> Unit
 ) {
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
     ) {
 
         Image(
@@ -273,7 +268,6 @@ fun HomeListMovie(
                     modifier = Modifier
                         .height(200.dp)
                         .width(150.dp)
-                        .padding(horizontal = 4.dp)
                         .clickable {
                             onClickedDetailMovie()
                         }

@@ -15,11 +15,17 @@ import androidx.compose.ui.unit.sp
 import com.quanle.movie_sample_compose.R
 
 @Composable
+@Preview
+fun singleMovie() {
+    MovieCard()
+}
+
+@Composable
 fun MovieCard(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier
+        modifier = modifier.padding(4.dp)
     ) {
         Card(
             shape = RoundedCornerShape(16.dp)
@@ -45,10 +51,4 @@ fun MovieCard(
             )
         }
     }
-}
-
-@Composable
-@Preview
-fun singleMovie() {
-    MovieCard()
 }

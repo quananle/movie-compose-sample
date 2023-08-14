@@ -172,7 +172,7 @@ fun NavGraphBuilder.explorerGraph(
             content = {
 
                 ExplorerScreen(
-                    onClickedDetailMovie = {
+                    onMovieClicked = {
                         navController.navigate(
                             route = MainGraph.CommonDestination.DetailMovie,
                         )

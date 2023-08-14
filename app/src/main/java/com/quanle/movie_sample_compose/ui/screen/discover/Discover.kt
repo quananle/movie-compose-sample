@@ -86,7 +86,6 @@ fun DiscoverListMovie(
                 MovieCard(
                     modifier = Modifier
                         .height(250.dp)
-                        .padding(horizontal = 4.dp, vertical = 4.dp)
                         .clickable {
                             onDetailMovieClicked(position)
                         }

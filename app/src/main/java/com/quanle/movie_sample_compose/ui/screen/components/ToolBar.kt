@@ -73,12 +73,12 @@ fun Toolbar(
 
         Text(
             text = title ?: "",
-            fontSize = 20.sp,
-            fontWeight = FontWeight(600),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
             maxLines = 1,
             modifier = Modifier
                 .weight(1f)
-                .padding(12.dp)
+                .padding(horizontal = 8.dp)
         )
 
         primaryAction?.let { drawableAction ->
@@ -86,7 +86,7 @@ fun Toolbar(
                 painter = painterResource(id = drawableAction),
                 contentDescription = "App Icon",
                 modifier = Modifier
-                    .size(26.dp)
+                    .size(24.dp)
                     .clickable {
                         onPrimaryActionClicked?.invoke()
                     }
@@ -100,7 +100,7 @@ fun Toolbar(
                 painter = painterResource(id = drawableAction),
                 contentDescription = "App Icon",
                 modifier = Modifier
-                    .size(28.dp)
+                    .size(24.dp)
                     .clickable {
                         onSecondaryActionClicked?.invoke()
                     }

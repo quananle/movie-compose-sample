@@ -36,15 +36,15 @@ fun NotificationScreen(
             .fillMaxSize()
             .padding(horizontal = 12.dp),
     ) {
-
         Toolbar(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(12.dp),
             title = title,
             primaryAction = R.drawable.ic_option,
-            isMainRoute = false,
             onPrimaryActionClicked = {
                 onOptionMenuClicked()
             },
+            isMainRoute = false,
             onBackActionClicked = {
                 onBackActionClicked()
             }
