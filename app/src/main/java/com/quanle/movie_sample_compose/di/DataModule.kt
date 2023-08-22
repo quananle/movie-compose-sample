@@ -13,11 +13,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
-    init {
-        wtf { "when the fuck did DataModule create?" }
-    }
-
-    @Provides
+ @Provides
     @Singleton
     fun provideMovieRemoteDataSource(
         movieDbService: MovieDbService

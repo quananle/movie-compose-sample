@@ -8,12 +8,22 @@ class MovieRemoteDataSource(
     private val movieDbService: MovieDbService
 ): SafeCall() {
 
-    init {
-        wtf { "when the fuck did MovieRemoteDataSource create?" }
+    suspend fun getPopularMovies(
+        page: Int = 1
+    ) = getResult {
+        movieDbService.getPopularMovies(page)
     }
 
-    suspend fun getMovieAsync() = getResult {
-        movieDbService.discoverMovieAsync()
+    suspend fun getTopRatedMovies(
+        page: Int = 1
+    ) = getResult {
+        movieDbService.getTopRatedMovies(page)
+    }
+
+    suspend fun getUpcomingMovies(
+        page: Int = 1
+    ) = getResult {
+        movieDbService.getUpcomingMovies(page)
     }
 
 }

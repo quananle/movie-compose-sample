@@ -21,11 +21,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-    init {
-        wtf { "when the fuck did NetworkModule create?" }
-    }
-
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class BaseUrlQualifier
@@ -35,7 +30,7 @@ object NetworkModule {
     annotation class ApiKeyQualifier
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
-    private const val API_KEY = "JhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NDg0Y2U0MzhkOTYxNGFmODE5MzhlOWRkODI1MzYxOSIsInN1YiI6IjY0YWY2MzBhYTQxMGM4MDBlNTU3Y2ZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AYhB5yWkdYlhBhY5QRV_pl488ZEyOJ2dLyGouU_PS6U"
+    private const val API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NDg0Y2U0MzhkOTYxNGFmODE5MzhlOWRkODI1MzYxOSIsInN1YiI6IjY0YWY2MzBhYTQxMGM4MDBlNTU3Y2ZhNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AYhB5yWkdYlhBhY5QRV_pl488ZEyOJ2dLyGouU_PS6U"
     private const val TIMEOUT: Long = 30
 
     @Provides

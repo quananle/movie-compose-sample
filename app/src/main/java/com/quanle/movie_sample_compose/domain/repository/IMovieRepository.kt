@@ -1,16 +1,20 @@
 package com.quanle.movie_sample_compose.domain.repository
 
-import com.quanle.movie_sample_compose.data.remote.response.BaseResponseModel
+import com.quanle.movie_sample_compose.data.remote.response.Movie
 import com.quanle.movie_sample_compose.data.remote.utils.Result
 import com.quanle.movie_sample_compose.utils.wtf
-import kotlinx.coroutines.Deferred
 
 interface IMovieRepository {
-    suspend fun getMovieAsync() : Result<BaseResponseModel<Any>>
+    suspend fun getPopularMovies(
+        page: Int = 1
+    ) : Result<List<Movie>>
 
-    companion object {
-        init {
-            wtf { "when the fuck did IMovieRepository create?" }
-        }
-    }
+    suspend fun getTopRatedMovies(
+        page: Int = 1
+    ) : Result<List<Movie>>
+
+    suspend fun getUpcomingMovies(
+        page: Int = 1
+    ) : Result<List<Movie>>
+
 }

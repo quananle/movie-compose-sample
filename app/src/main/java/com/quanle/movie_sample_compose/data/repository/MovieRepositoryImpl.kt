@@ -1,22 +1,22 @@
 package com.quanle.movie_sample_compose.data.repository
 
-import com.quanle.movie_sample_compose.data.remote.response.BaseResponseModel
 import com.quanle.movie_sample_compose.data.remote.utils.Result
-import com.quanle.movie_sample_compose.data.remote.utils.SafeCall
 import com.quanle.movie_sample_compose.data.remote.datasource.MovieRemoteDataSource
+import com.quanle.movie_sample_compose.data.remote.response.Movie
 import com.quanle.movie_sample_compose.domain.repository.IMovieRepository
-import com.quanle.movie_sample_compose.utils.wtf
-import kotlinx.coroutines.Deferred
 
 class MovieRepositoryImpl (
     private val movieRemoteDataSource: MovieRemoteDataSource
-): IMovieRepository, SafeCall() {
-
-    init {
-        wtf { "when the fuck did MovieRepositoryImpl create?" }
+): IMovieRepository {
+    override suspend fun getPopularMovies(page: Int): Result<List<Movie>> {
+        return movieRemoteDataSource.getPopularMovies()
     }
 
-    override suspend fun getMovieAsync(): Result<BaseResponseModel<Any>> {
-        return movieRemoteDataSource.getMovieAsync()
+    override suspend fun getTopRatedMovies(page: Int): Result<List<Movie>> {
+        return movieRemoteDataSource.getTopRatedMovies()
+    }
+
+    override suspend fun getUpcomingMovies(page: Int): Result<List<Movie>> {
+        return movieRemoteDataSource.getUpcomingMovies()
     }
 }

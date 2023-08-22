@@ -9,6 +9,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,19 +23,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.quanle.movie_sample_compose.R
+import com.quanle.movie_sample_compose.data.remote.response.Movie
+import com.quanle.movie_sample_compose.data.remote.utils.Result
 import com.quanle.movie_sample_compose.ui.screen.components.MovieCard
+import com.quanle.movie_sample_compose.utils.SourceImage
+import com.quanle.movie_sample_compose.utils.toImageUri
+import com.quanle.movie_sample_compose.utils.wtf
 
 @Composable
 @Preview
 fun HomePreview() {
-    HomeScreen(
-        modifier = Modifier,
-        onClickedDiscoverMovie = { /*TODO*/ },
-        onClickedSearch = { /*TODO*/ },
-        onClickedNotification = { /*TODO*/ }) {
 
-    }
+    HomeListMovie(
+        title = "asdasd",
+        onClickedSeeAll = { /*TODO*/ },
+        onClickedDetailMovie = { /*TODO*/ },
+        movies = listOf()
+    )
 }
 
 @Composable
@@ -43,6 +54,10 @@ fun HomeScreen(
     onClickedNotification: () -> Unit,
     onClickedDetailMovie: () -> Unit
 ) {
+    val viewmodel: HomeViewModel = hiltViewModel()
+    val uiState = viewmodel.homeUiState.collectAsState()
+
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -50,9 +65,11 @@ fun HomeScreen(
     ) { /** HomeScreen with component **/
         
         Banner(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = uiState.value.topRatedMovies?.get(0)?.backdrop_path?.toImageUri(SourceImage.LARGE) ?: "",
             contentDes = "ah",
-            modifier = Modifier.height(350.dp),
+            modifier = Modifier
+                .height(330.dp)
+                .fillMaxHeight(0.4f),
             onClickedSearch = {
                 onClickedSearch()
             },
@@ -61,13 +78,15 @@ fun HomeScreen(
             }
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         HomeListMovie(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(8.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
             title = "Top 10 Movies This Week",
-            movies = 10,
+            movies = uiState.value.popularMovies ?: listOf(),
             onClickedSeeAll =  {
                 onClickedDiscoverMovie()
             },
@@ -77,12 +96,12 @@ fun HomeScreen(
         ) // end of New Releases
 
         HomeListMovie(
+            movies = uiState.value.topRatedMovies ?: listOf(),
             modifier = Modifier
-                .padding(12.dp)
+                .padding(8.dp)
                 .fillMaxWidth()
                 .wrapContentHeight(),
             title = "Top 10 Movies This Week",
-            movies = 10,
             onClickedSeeAll =  {
                 onClickedDiscoverMovie()
             },
@@ -91,6 +110,50 @@ fun HomeScreen(
             }
         )
 
+        HomeListMovie(
+            movies = uiState.value.topRatedMovies ?: listOf(),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            title = "Top 10 Movies This Week",
+            onClickedSeeAll =  {
+                onClickedDiscoverMovie()
+            },
+            onClickedDetailMovie = {
+                onClickedDetailMovie()
+            }
+        )
+
+        HomeListMovie(
+            movies = uiState.value.topRatedMovies ?: listOf(),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            title = "Top 10 Movies This Week",
+            onClickedSeeAll =  {
+                onClickedDiscoverMovie()
+            },
+            onClickedDetailMovie = {
+                onClickedDetailMovie()
+            }
+        )
+
+        HomeListMovie(
+            movies = uiState.value.topRatedMovies ?: listOf(),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            title = "Top 10 Movies This Week",
+            onClickedSeeAll =  {
+                onClickedDiscoverMovie()
+            },
+            onClickedDetailMovie = {
+                onClickedDetailMovie()
+            }
+        )
     }
 
 }
@@ -98,7 +161,7 @@ fun HomeScreen(
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
-    painter: Painter,
+    painter: String,
     contentDes: String = "",
     onClickedSearch: () -> Unit,
     onClickedNotification: () -> Unit
@@ -107,8 +170,8 @@ fun Banner(
         modifier = modifier
     ) {
 
-        Image(
-            painter = painter,
+        AsyncImage(
+            model = painter,
             contentDescription = contentDes,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -163,15 +226,15 @@ fun Banner(
                     text = "Dr Strange",
                     color = Color.White,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight(800),
+                    fontWeight = FontWeight.W800,
                 )
 
                 Text(
                     text = "hahashdhashdhasdhashdhashdahsd",
                     color = Color.White,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight(400),
-                    modifier = Modifier.padding(horizontal = 0.dp, vertical = 4.dp)
+                    fontWeight = FontWeight.W400,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
 
                 Row {
@@ -232,13 +295,13 @@ fun HomeListMovie(
     title: String,
     onClickedSeeAll: () -> Unit,
     onClickedDetailMovie: () -> Unit,
-    movies: Int //mock
+    movies: List<Movie>
 ) {
     Column(
         modifier = modifier
     ) {
         Row (
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 8.dp)
         ) {
             Text(
                 text = title,
@@ -249,28 +312,27 @@ fun HomeListMovie(
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = "See all",
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight(600),
                 color = Color.Red,
                 modifier = Modifier.clickable { onClickedSeeAll() }
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            items(movies) {
+            items(movies.size) {index ->
                 MovieCard(
                     modifier = Modifier
                         .height(200.dp)
                         .width(150.dp)
                         .clickable {
                             onClickedDetailMovie()
-                        }
+                        },
+                    movie = movies[index]
                 )
             }
         }

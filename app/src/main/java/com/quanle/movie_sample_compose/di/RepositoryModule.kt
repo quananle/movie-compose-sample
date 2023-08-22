@@ -15,11 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
-    init {
-        wtf { "when the fuck did RepositoryModule create?" }
-    }
-
     @Provides
     @Singleton
     fun provideMovieRepository(

@@ -66,7 +66,6 @@ fun ExplorerScreen(
 
     ModalBottomSheetLayout(
         modifier = Modifier
-            .clickable { focusCleared = true }
             .fillMaxSize()
             .background(Color.White),
         sheetState = modalSheetState,
@@ -80,69 +79,74 @@ fun ExplorerScreen(
             )
         },
         content = { /** Content of Explorer Screen **/
-
-            SearchBar(
+            Box(
                 modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth(),
-                isFocusCleared = focusCleared,
-                onFocusCleared = { focusCleared = false },
-                text = searchValue,
-                onTextChanged = {searchValue = it},
-                onSearch = {
-                           wtf { it }
-                },
-                onFilterClicked = {
-                    coroutineScope.launch {
-                        if (modalSheetState.isVisible)
-                            modalSheetState.hide()
-                        else
-                            modalSheetState.show()
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            LazyRow(
-                content = {
-                    items(count = items) {
-                        ChipComponent(
-                            content = if (it % 3 != 0) "asdasdasda" else "Quan",
-                            isSelected = it % 2 == 0
-                        )
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            if (items > 0) {
-                LazyVerticalGrid(
+                    .clickable { focusCleared = true }
+                    .fillMaxSize()
+            ) {
+                SearchBar(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp),
-                    columns = GridCells.Fixed(2),
+                        .padding(12.dp)
+                        .fillMaxWidth(),
+                    isFocusCleared = focusCleared,
+                    onFocusCleared = { focusCleared = false },
+                    text = searchValue,
+                    onTextChanged = {searchValue = it},
+                    onSearch = {
+                        wtf { it }
+                    },
+                    onFilterClicked = {
+                        coroutineScope.launch {
+                            if (modalSheetState.isVisible)
+                                modalSheetState.hide()
+                            else
+                                modalSheetState.show()
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                LazyRow(
                     content = {
-                        items(30) {
-                            MovieCard(
-                                modifier = Modifier
-                                    .height(250.dp)
-                                    .clickable {
-                                        onMovieClicked()
-                                    }
+                        items(count = items) {
+                            ChipComponent(
+                                content = if (it % 3 != 0) "asdasdasda" else "Quan",
+                                isSelected = it % 2 == 0
                             )
                         }
                     }
                 )
-            } else {
-                Image(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp),
-                    painter = painterResource(id = R.drawable.ic_empty_list),
-                    contentDescription = ""
-                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                if (items > 0) {
+                    LazyVerticalGrid(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(12.dp),
+                        columns = GridCells.Fixed(2),
+                        content = {
+                            items(30) {
+                                MovieCard(
+                                    modifier = Modifier
+                                        .height(250.dp)
+                                        .clickable {
+                                            onMovieClicked()
+                                        }
+                                )
+                            }
+                        }
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(12.dp),
+                        painter = painterResource(id = R.drawable.ic_empty_list),
+                        contentDescription = ""
+                    )
+                }
             }
         }
     )

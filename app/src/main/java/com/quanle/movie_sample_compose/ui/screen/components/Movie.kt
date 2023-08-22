@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -27,7 +28,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.quanle.movie_sample_compose.R
+import com.quanle.movie_sample_compose.data.remote.response.Movie
+import com.quanle.movie_sample_compose.utils.SourceImage
+import com.quanle.movie_sample_compose.utils.toImageUri
 
 @Preview(showBackground = true)
 @Composable
@@ -156,6 +161,41 @@ fun MovieThumbnail(
                     .padding(12.dp),
                 text = episodeTitle ?: "",
                 fontSize = 16.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun MovieCard(
+    modifier: Modifier = Modifier,
+    movie: Movie? = null,
+    typeImage: SourceImage = SourceImage.ORIGINAL
+) {
+    Box(
+        modifier = modifier.padding(4.dp)
+    ) {
+        Card(
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            AsyncImage(
+                modifier = Modifier.fillMaxSize(),
+                model = movie?.poster_path?.toImageUri(typeImage),
+                contentScale = ContentScale.FillBounds,
+                contentDescription = ""
+            )
+        }
+        Card(
+            shape = RoundedCornerShape(8.dp),
+            backgroundColor = Color.Red,
+            modifier = Modifier
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "${movie?.vote_count}",
+                color = Color.White,
+                fontSize = 8.sp,
+                modifier = Modifier.padding(8.dp)
             )
         }
     }
